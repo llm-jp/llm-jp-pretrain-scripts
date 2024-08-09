@@ -60,11 +60,11 @@ mkdir src
 pushd src
 
 # install Python
-git clone https://github.com/python/cpython -b v${PYTHON_VERSION}
+time git clone https://github.com/python/cpython -b v${PYTHON_VERSION}
 pushd cpython
-./configure --prefix="${ENV_DIR}/python" --enable-optimizations
-make -j 64
-make install
+time ./configure --prefix="${ENV_DIR}/python" --enable-optimizations
+time make -j 64
+time make install
 popd # src
 popd # $ENV_DIR
 
@@ -75,15 +75,15 @@ python -m pip install --no-cache-dir -U pip setuptools
 
 # install llm-jp-eval
 pushd src
-git clone https://github.com/llm-jp/llm-jp-eval -b v${LLM_JP_EVAL_TAG}
+time git clone https://github.com/llm-jp/llm-jp-eval -b v${LLM_JP_EVAL_TAG}
 pushd llm-jp-eval
 if [ -n "$LLM_JP_EVAL_BUG_FIX_COMMIT_IDS" ]; then
   git cherry-pick -m 1 ${LLM_JP_EVAL_BUG_FIX_COMMIT_IDS}
 fi
-pip install --no-cache-dir .
+time pip install --no-cache-dir .
 
 # preprocess dataset
-python scripts/preprocess_dataset.py  \
+time python scripts/preprocess_dataset.py  \
   --dataset-name all  \
   --output-dir ${ENV_DIR}/data/llm-jp-eval \
   --version-name $LLM_JP_EVAL_TAG

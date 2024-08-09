@@ -3,8 +3,9 @@
 #SBATCH --partition=<partition>
 #SBATCH --exclusive
 #SBATCH --nodes 1
-#SBATCH --gpus=1
-#SBATCH --ntasks=8
+#SBATCH --gpus-per-node=1
+#SBATCH --cpus-per-task
+#SBATCH --ntasks-per-node=8
 #SBATCH --output=logs/%x-%j.out
 #SBATCH --error=logs/%x-%j.err
 
